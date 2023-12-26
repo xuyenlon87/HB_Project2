@@ -10,10 +10,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int rowF1 = 10;
     [SerializeField] private float sizeB1 = 30f;
     [SerializeField] private GameObject groundCubePrefab;
-    private int sum1 =0;
-    public int currentMap = 0;
+    [SerializeField] GameObject brickPrefabGreen;
+    [SerializeField] GameObject brickPrefabRed;
+    [SerializeField] GameObject brickPrefabBlue;
+    [SerializeField] GameObject brickPrefabYellow;
+    [SerializeField] GameObject brickBridge;
+    [SerializeField] GameObject player;
+    [SerializeField] private List<int> numbers = new List<int>();
 
-    private static LevelManager instance;
     public static LevelManager Instance
     {
         get
@@ -25,22 +29,13 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
-    [SerializeField] List<TextAsset> testMap = new List<TextAsset>();
-    [SerializeField] GameObject brickPrefabGreen;
-    [SerializeField] GameObject brickPrefabRed;
-    [SerializeField] GameObject brickPrefabBlue;
-    [SerializeField] GameObject brickPrefabYellow;
-    [SerializeField] GameObject brickBridge;
-    [SerializeField] GameObject player;
+    public GameObject playerClone;
+    public List<GameObject> listDelete = new List<GameObject>();
 
-    private int countBlue = 0;
-    private int countGreen = 0;
-    private int countYellow = 0;
-    private int countRed = 0;
+    private int index1 = 0;
+    private static LevelManager instance;
 
-    public List<GameObject> listBrickDelete = new List<GameObject>();
-    // Start is called before the first frame update
-    private void Awake()
+    void Awake()
     {
         if (instance == null)
         {
@@ -55,7 +50,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         DrawmG1();
-        DrawF1();
+        DrawmF1();
         SpawmPlayer();
         DrawBridgeF1();
     }
@@ -70,47 +65,54 @@ public class LevelManager : MonoBehaviour
     {
         var xPos = Random.Range(1, 8);
         var zPos = Random.Range(1, 8);
-        Instantiate(player, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
+        playerClone = Instantiate(player, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
+        listDelete.Add(playerClone);
     }
-    private void DrawF1()
+    private void DrawmF1()
     {
-        if (listBrickDelete != null)
+        for (int i = 0; i < 25; i++)
         {
-            foreach (var i in listBrickDelete)
+            numbers.Add(0);
+            numbers.Add(1);
+            numbers.Add(2);
+            numbers.Add(3);
+        }
+        Suffle(numbers);
+        if (listDelete != null)
+        {
+            foreach (var i in listDelete)
             {
                 Destroy(i);
             }
-            listBrickDelete.Clear();
+            listDelete.Clear();
         }
         for (int i = (int)originalBrickF1.x; i < colF1; i++)
         {
             for (int j = (int)originalBrickF1.z; j < rowF1; j++)
             {
-                
-                int color = Random.Range(0, 4);
-                if(color == 0 && countBlue <=25)
+                if(numbers[index1] == 0)
                 {
-                    countBlue += 1;
-                    Instantiate(brickPrefabBlue, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    listBrickDelete.Add(brickPrefabBlue);
+                    GameObject brickClone = Instantiate(brickPrefabBlue, new Vector3(i, 0.5f, j), Quaternion.identity);
+                    index1++;
+                    listDelete.Add(brickClone);
                 }
-                else if (color == 1 && countRed <=25)
+                else if (numbers[index1] == 1)
                 {
-                    countRed += 1;
-                    Instantiate(brickPrefabRed, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    listBrickDelete.Add(brickPrefabRed);
+                    GameObject brickClone = Instantiate(brickPrefabRed, new Vector3(i, 0.5f, j), Quaternion.identity);
+                    index1++;
+                    listDelete.Add(brickClone);
                 }
-                else if (color == 2 && countGreen <=25)
+                else if (numbers[index1] == 2)
                 {
-                    countGreen += 1;
-                    Instantiate(brickPrefabGreen, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    listBrickDelete.Add(brickPrefabGreen);
+                    GameObject brickClone = Instantiate(brickPrefabGreen, new Vector3(i, 0.5f, j), Quaternion.identity);
+                    index1++;
+                    listDelete.Add(brickClone);
                 }
-                else if (color == 3 && countYellow <=25)
+                else if (numbers[index1] == 3)
                 {
-                    countYellow += 1;
-                    Instantiate(brickPrefabYellow, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    listBrickDelete.Add(brickPrefabYellow);
+                    GameObject brickClone = Instantiate(brickPrefabYellow, new Vector3(i, 0.5f, j), Quaternion.identity);
+                    index1++;
+                    listDelete.Add(brickClone);
                 }
             }
         }
@@ -123,7 +125,8 @@ public class LevelManager : MonoBehaviour
             for (int j = (int)originalBrickF1.z; j <= rowF1+1; j++)
             {
 
-                Instantiate(groundCubePrefab, new Vector3(i-1, 0, j-1), Quaternion.identity);
+                GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i-1, 0, j-1), Quaternion.identity);
+                listDelete.Add(groundClone);
             }
         }
     }
@@ -132,7 +135,20 @@ public class LevelManager : MonoBehaviour
         Debug.Log("bridge");
         for (int i = (int)originalBridgeF1.z; i < sizeB1; i++)
         {
-            Instantiate(brickBridge, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
+            GameObject bridgeClone = Instantiate(brickBridge, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
+            listDelete.Add(bridgeClone);
+        }
+    }
+
+    private void Suffle(List<int> list)
+    {
+        for (int i = list.Count-1; i > 0; i--)
+        {
+
+            int j = Random.Range(0, 100);
+            int temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
         }
     }
 

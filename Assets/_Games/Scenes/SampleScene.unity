@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -332,6 +333,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 37.158, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f3fd8f900285e4ea0209944c8d63f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 10, z: -10}
+  speed: 2
 --- !u!1 &1301582022
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,15 +428,15 @@ MonoBehaviour:
   rowF1: 10
   sizeB1: 30
   groundCubePrefab: {fileID: 1593886938}
-  currentMap: 0
-  testMap: []
   brickPrefabGreen: {fileID: 1858638637333668820, guid: 96548b9d49bf09340ac259cea0f46d34, type: 3}
   brickPrefabRed: {fileID: 3523174439235608512, guid: 4fa9967506fb96f488ab46dffca6f736, type: 3}
   brickPrefabBlue: {fileID: 1519675779588831968, guid: 25d78fdf9dcc97240942f2b494ba8f20, type: 3}
   brickPrefabYellow: {fileID: 5967337660095448629, guid: 99daf3c0c7f917047afbcabdb1038e60, type: 3}
   brickBridge: {fileID: 3535993825241502555, guid: db9935a5f75e6224e90a3adeb333c173, type: 3}
   player: {fileID: 1816646117523639338, guid: 2d437d0a4f3040843bf50945259dbf6a, type: 3}
-  listBrickDelete: []
+  numbers: 
+  playerClone: {fileID: 0}
+  listDelete: []
 --- !u!1 &1593886938 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3048606420916119127, guid: 5a560a1ac5bac854a96967b6f2c1c6ad, type: 3}

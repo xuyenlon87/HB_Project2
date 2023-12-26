@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private int col1 = 10;
-    private int row1 = 10;
+    [SerializeField] Vector3 originalBrickF1;
+    [SerializeField] Vector3 originalBridgeF1;
+    [SerializeField] private int colF1 = 10;
+    [SerializeField] private int rowF1 = 10;
+    [SerializeField] private float sizeB1 = 30f;
+    [SerializeField] private GameObject groundCubePrefab;
     private int sum1 =0;
     public int currentMap = 0;
 
@@ -23,11 +27,10 @@ public class LevelManager : MonoBehaviour
     }
     [SerializeField] List<TextAsset> testMap = new List<TextAsset>();
     [SerializeField] GameObject brickPrefabGreen;
-    [SerializeField] GameObject brickPrefabBlack;
     [SerializeField] GameObject brickPrefabRed;
     [SerializeField] GameObject brickPrefabBlue;
     [SerializeField] GameObject brickPrefabYellow;
-    [SerializeField] GameObject brickGround;
+    [SerializeField] GameObject brickBridge;
     [SerializeField] GameObject player;
 
     private int countBlue = 0;
@@ -51,8 +54,10 @@ public class LevelManager : MonoBehaviour
     }
     void Start()
     {
-        DrawMap();
+        DrawmG1();
+        DrawF1();
         SpawmPlayer();
+        DrawBridgeF1();
     }
 
     // Update is called once per frame
@@ -67,7 +72,7 @@ public class LevelManager : MonoBehaviour
         var zPos = Random.Range(1, 8);
         Instantiate(player, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
     }
-    public void DrawMap()
+    private void DrawF1()
     {
         if (listBrickDelete != null)
         {
@@ -77,9 +82,9 @@ public class LevelManager : MonoBehaviour
             }
             listBrickDelete.Clear();
         }
-        for (int i = 0; i < col1; i++)
+        for (int i = (int)originalBrickF1.x; i < colF1; i++)
         {
-            for (int j = 0; j < row1; j++)
+            for (int j = (int)originalBrickF1.z; j < rowF1; j++)
             {
                 
                 int color = Random.Range(0, 4);
@@ -110,5 +115,26 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    private void DrawmG1()
+    {
+        for (int i = (int)originalBrickF1.x; i <= colF1+1; i++)
+        {
+            for (int j = (int)originalBrickF1.z; j <= rowF1+1; j++)
+            {
+
+                Instantiate(groundCubePrefab, new Vector3(i-1, 0, j-1), Quaternion.identity);
+            }
+        }
+    }
+    private void DrawBridgeF1()
+    {
+        Debug.Log("bridge");
+        for (int i = (int)originalBridgeF1.z; i < sizeB1; i++)
+        {
+            Instantiate(brickBridge, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
+        }
+    }
+
 
 }

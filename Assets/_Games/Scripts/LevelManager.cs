@@ -1,21 +1,21 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] Vector3 originalBrickF1;
-    [SerializeField] Vector3 originalBridgeF1;
-    [SerializeField] private int colF1 = 10;
-    [SerializeField] private int rowF1 = 10;
+    [SerializeField] Vector3 originalBrickF1;//vị trí gốc của floor1
+    [SerializeField] Vector3 originalBridgeF1;//vị trí gốc của bridge1
+    [SerializeField] private int colF1 = 10;//mảng 2 chiều tạo floor1
+    [SerializeField] private int rowF1 = 10;//mảng 2 chiều tạo floor1
     [SerializeField] private float sizeB1 = 30f;
     [SerializeField] private GameObject groundCubePrefab;
     [SerializeField] GameObject brickPrefabGreen;
     [SerializeField] GameObject brickPrefabRed;
     [SerializeField] GameObject brickPrefabBlue;
     [SerializeField] GameObject brickPrefabYellow;
-    [SerializeField] GameObject brickBridge;
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject brickBridgePrefab;
+    [SerializeField] GameObject playerPrefab;
     [SerializeField] private List<int> numbers = new List<int>();
 
     public static LevelManager Instance
@@ -49,10 +49,7 @@ public class LevelManager : MonoBehaviour
     }
     void Start()
     {
-        DrawmG1();
-        DrawmF1();
-        SpawmPlayer();
-        DrawBridgeF1();
+
     }
 
     // Update is called once per frame
@@ -65,19 +62,11 @@ public class LevelManager : MonoBehaviour
     {
         var xPos = Random.Range(1, 8);
         var zPos = Random.Range(1, 8);
-        playerClone = Instantiate(player, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
+        playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
         listDelete.Add(playerClone);
     }
-    private void DrawmF1()
+    public void DrawmF1()
     {
-        for (int i = 0; i < 25; i++)
-        {
-            numbers.Add(0);
-            numbers.Add(1);
-            numbers.Add(2);
-            numbers.Add(3);
-        }
-        Suffle(numbers);
         if (listDelete != null)
         {
             foreach (var i in listDelete)
@@ -85,6 +74,14 @@ public class LevelManager : MonoBehaviour
                 Destroy(i);
             }
             listDelete.Clear();
+            for (int i = 0; i < 25; i++)
+        {
+            numbers.Add(0);
+            numbers.Add(1);
+            numbers.Add(2);
+            numbers.Add(3);
+        }
+        Suffle(numbers);
         }
         for (int i = (int)originalBrickF1.x; i < colF1; i++)
         {
@@ -118,24 +115,23 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void DrawmG1()
+    public void DrawmG1()
     {
         for (int i = (int)originalBrickF1.x; i <= colF1+1; i++)
         {
             for (int j = (int)originalBrickF1.z; j <= rowF1+1; j++)
             {
-
                 GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i-1, 0, j-1), Quaternion.identity);
                 listDelete.Add(groundClone);
+                Debug.Log("G1");
             }
         }
     }
-    private void DrawBridgeF1()
+    public void DrawBridgeF1()
     {
-        Debug.Log("bridge");
         for (int i = (int)originalBridgeF1.z; i < sizeB1; i++)
         {
-            GameObject bridgeClone = Instantiate(brickBridge, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
+            GameObject bridgeClone = Instantiate(brickBridgePrefab, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
             listDelete.Add(bridgeClone);
         }
     }

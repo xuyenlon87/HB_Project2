@@ -7,10 +7,11 @@ public class StartState : IState
     private float timer = 0;
     public void OnEnter(GameManager gameManager)
     {
+
         LevelManager.Instance.DrawmF1();
-        LevelManager.Instance.DrawmG1();
-        LevelManager.Instance.SpawmPlayer();
+        LevelManager.Instance.DrawG1();
         LevelManager.Instance.DrawBridgeF1();
+        LevelManager.Instance.SpawmPlayer();
         LevelManager.Instance.playerClone.GetComponent<Player>().enabled = false;
     }
 

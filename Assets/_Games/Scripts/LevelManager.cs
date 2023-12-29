@@ -32,8 +32,9 @@ public class LevelManager : MonoBehaviour
     public GameObject playerClone;
     public List<GameObject> listDelete = new List<GameObject>();
 
-    private int index1 = 0;
+    private int index = 0;
     private static LevelManager instance;
+    private int maxColorBrickF1 =25;
 
     void Awake()
     {
@@ -67,14 +68,18 @@ public class LevelManager : MonoBehaviour
     }
     public void DrawmF1()
     {
+        //Tạo list obj map cũ => clear khi tạo map mới
         if (listDelete != null)
         {
             foreach (var i in listDelete)
             {
                 Destroy(i);
             }
-            listDelete.Clear();
-            for (int i = 0; i < 25; i++)
+            listDelete.Clear(); 
+        }
+
+        //Tạo list chứa tất cả brick có màu
+        for (int i = 0; i < maxColorBrickF1; i++)
         {
             numbers.Add(0);
             numbers.Add(1);
@@ -82,57 +87,63 @@ public class LevelManager : MonoBehaviour
             numbers.Add(3);
         }
         Suffle(numbers);
-        }
+        //Tạo brick có màu trong ma trận 2 chiều
         for (int i = (int)originalBrickF1.x; i < colF1; i++)
         {
             for (int j = (int)originalBrickF1.z; j < rowF1; j++)
             {
-                if(numbers[index1] == 0)
+                if(index < numbers.Count)
                 {
-                    GameObject brickClone = Instantiate(brickPrefabBlue, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    index1++;
-                    listDelete.Add(brickClone);
-                }
-                else if (numbers[index1] == 1)
-                {
-                    GameObject brickClone = Instantiate(brickPrefabRed, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    index1++;
-                    listDelete.Add(brickClone);
-                }
-                else if (numbers[index1] == 2)
-                {
-                    GameObject brickClone = Instantiate(brickPrefabGreen, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    index1++;
-                    listDelete.Add(brickClone);
-                }
-                else if (numbers[index1] == 3)
-                {
-                    GameObject brickClone = Instantiate(brickPrefabYellow, new Vector3(i, 0.5f, j), Quaternion.identity);
-                    index1++;
-                    listDelete.Add(brickClone);
-                }
+                    if (numbers[index] == 0)
+                    {
+                        GameObject brickClone = Instantiate(brickPrefabBlue, new Vector3(i, 0.5f, j), Quaternion.identity);
+                        index++;
+                        listDelete.Add(brickClone);
+                    }
+                    else if (numbers[index] == 1)
+                    {
+                        GameObject brickClone = Instantiate(brickPrefabRed, new Vector3(i, 0.5f, j), Quaternion.identity);
+                        index++;
+                        listDelete.Add(brickClone);
+                    }
+                    else if (numbers[index] == 2)
+                    {
+                        GameObject brickClone = Instantiate(brickPrefabGreen, new Vector3(i, 0.5f, j), Quaternion.identity);
+                        index++;
+                        listDelete.Add(brickClone);
+                    }
+                    else if (numbers[index] == 3)
+                    {
+                        GameObject brickClone = Instantiate(brickPrefabYellow, new Vector3(i, 0.5f, j), Quaternion.identity);
+                        index++;
+                        listDelete.Add(brickClone);
+                    }
+                }  
             }
         }
     }
 
-    public void DrawmG1()
+    //Tạo ground theo Vector brick gốc
+    public void DrawG1()
     {
-        for (int i = (int)originalBrickF1.x; i <= colF1+1; i++)
+        for (int i = (int)originalBrickF1.x; i <= colF1 + 1; i++)
         {
-            for (int j = (int)originalBrickF1.z; j <= rowF1+1; j++)
+            for (int j = (int)originalBrickF1.z; j <= rowF1 + 1; j++)
             {
-                GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i-1, 0, j-1), Quaternion.identity);
+                GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i - 1, 0, j - 1), Quaternion.identity);
                 listDelete.Add(groundClone);
                 Debug.Log("G1");
             }
         }
     }
+    //Tạo bridgeF1 theo vector brick gốc
     public void DrawBridgeF1()
     {
         for (int i = (int)originalBridgeF1.z; i < sizeB1; i++)
         {
             GameObject bridgeClone = Instantiate(brickBridgePrefab, new Vector3(originalBridgeF1.x, originalBridgeF1.y, i), Quaternion.identity);
             listDelete.Add(bridgeClone);
+            originalBridgeF1.y += 0.1f;
         }
     }
 

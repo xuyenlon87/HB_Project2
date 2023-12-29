@@ -31,7 +31,8 @@ public class LevelManager : MonoBehaviour
     }
     public GameObject playerClone;
     public List<GameObject> listDelete = new List<GameObject>();
-
+    public List<Vector3> listSpawmBrick;
+    public FixedJoystick fixedJoystick;
     private int index = 0;
     private static LevelManager instance;
     private int maxColorBrickF1 =25;
@@ -56,7 +57,10 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(listSpawmBrick.Count > 0)
+        {
+            Invoke("SpawmBrick", 0.5f);
+        }
     }
 
     public void SpawmPlayer()
@@ -64,6 +68,7 @@ public class LevelManager : MonoBehaviour
         var xPos = Random.Range(1, 8);
         var zPos = Random.Range(1, 8);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
+        playerClone.GetComponent<JoystickPlayerExample>().fixedJoystick = this.fixedJoystick;
         listDelete.Add(playerClone);
     }
     public void DrawmF1()
@@ -159,5 +164,28 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void SpawmBrick()
+    {
+        int randomColor = Random.Range(0, 4);
+        switch (randomColor)
+        {
+            case 0:
+                GameObject brickClone0 = Instantiate(brickPrefabBlue, listSpawmBrick[0], Quaternion.identity);
+                listSpawmBrick.Remove(listSpawmBrick[0]);
+                break;
+            case 1:
+                GameObject brickClone1 = Instantiate(brickPrefabRed, listSpawmBrick[0], Quaternion.identity);
+                listSpawmBrick.Remove(listSpawmBrick[0]);
+                break;
+            case 2:
+                GameObject brickClone2 = Instantiate(brickPrefabGreen, listSpawmBrick[0], Quaternion.identity);
+                listSpawmBrick.Remove(listSpawmBrick[0]);
+                break;
+            case 3:
+                GameObject brickClone3 = Instantiate(brickPrefabYellow, listSpawmBrick[0], Quaternion.identity);
+                listSpawmBrick.Remove(listSpawmBrick[0]);
+                break;
+        }
+    }
 
 }

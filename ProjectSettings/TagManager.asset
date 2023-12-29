@@ -9,6 +9,7 @@ TagManager:
   - GreenBrick
   - YellowBrick
   - GroundBrick
+  - BlackBrick
   layers:
   - Default
   - TransparentFX

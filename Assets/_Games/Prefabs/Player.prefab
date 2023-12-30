@@ -125,12 +125,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816646117523639338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 753ddc481a16dbf43b54d2b80868213d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   back: {fileID: 4667132418484562638}
+  brickOnPlayer: []
 --- !u!114 &7771138286059554327
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -61,15 +61,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void SpawmPlayer(float min, float max)
+    public void SpawmPlayer(float minX, float maxX, float minZ, float maxZ )
     {
-        var xPos = Random.Range(min, max);
-        var zPos = Random.Range(min, max);
+        var xPos = Random.Range(minX, maxX);
+        var zPos = Random.Range(minZ, maxZ);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
         playerClone.GetComponent<JoystickPlayerExample>().fixedJoystick = this.fixedJoystick;
         //listDelete.Add(playerClone);
     }
-    public void DrawmFloor(int maxOneColor, Vector3 originalBrick, int maxCol, int maxRow )
+    public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
     {
         ////Tạo list obj map cũ => clear khi tạo map mới
         //if (listDelete != null)
@@ -83,8 +83,8 @@ public class LevelManager : MonoBehaviour
 
         //Vẽ ground
         GameObject groundClone = Instantiate(groundCubePrefab, originalBrick , Quaternion.identity); ;
-        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxCol + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxRow + 2));
-        groundClone.transform.position = new Vector3(originalBrick.x + maxCol/2 - 0.5f, originalBrick.y, originalBrick.z + maxRow/2 - 0.5f);
+        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxRow + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxCol + 2));
+        groundClone.transform.position = new Vector3(originalBrick.x + 0.5f, originalBrick.y, originalBrick.z + 0.5f);
 
         //Tạo list chứa tất cả brick có màu
         if (numbers != null)
@@ -102,11 +102,11 @@ public class LevelManager : MonoBehaviour
         //Tạo brick có màu trong ma trận 2 chiều
         int index = 0;
         GameObject brickClone = null;
-        for (int i = (int)originalBrick.x; i < (maxCol + (int)originalBrick.x); i++)
+        for (int i = 0; i < maxRow; i++)
         {
-            for (int j = (int)originalBrick.z; j < (maxRow + (int)originalBrick.z); j++)
+            for (int j = 0; j < maxCol; j++)
             {
-                if(index < numbers.Count)
+                if (index < numbers.Count)
                 {
                     if (numbers[index] == 0)
                     {
@@ -124,10 +124,12 @@ public class LevelManager : MonoBehaviour
                     {
                         brickClone = brickPrefabYellow;
                     }
-                    Instantiate(brickClone, new Vector3(i, originalBrick.y + 0.55f, j), Quaternion.identity);
+                    float xPos = originalBrick.x + (i - maxRow/2 )+1 ; // Tính toán vị trí theo hàng
+                    float zPos = originalBrick.z + (j - maxCol/2 )+1 ; // Tính toán vị trí theo cột
+                    Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
                     index++;
-                    //listDelete.Add(brickClone);
-                }  
+                    // listDelete.Add(brickClone);
+                }
             }
         }
     }
@@ -148,9 +150,9 @@ public class LevelManager : MonoBehaviour
     //Tạo bridgeF1 theo vector brick gốc
     public void DrawBridge(Vector3 originalBridge, int sizeBridge)
     {
-        for (int i = (int)originalBridge.z; i < sizeBridge; i++)
+        for (int i = 0; i < sizeBridge; i++)
         {
-            GameObject bridgeClone = Instantiate(brickBridgePrefab, new Vector3(originalBridge.x, originalBridge.y, i), Quaternion.identity);
+            GameObject bridgeClone = Instantiate(brickBridgePrefab, new Vector3(originalBridge.x, originalBridge.y, originalBridge.z + i), Quaternion.identity);
             listDelete.Add(bridgeClone);
             originalBridge.y += 0.1f;
         }

@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
             brickOnPlayer.Add(other.gameObject);
             LevelManager.Instance.listSpawmBrick.Add(other.transform.position);
             other.transform.parent = back.transform;
+            other.transform.localRotation = Quaternion.identity;
             other.transform.localPosition = new Vector3(0, posYBack.y , 0);
             posYBack.y += 0.1f;
         }

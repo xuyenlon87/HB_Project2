@@ -67,21 +67,30 @@ public class LevelManager : MonoBehaviour
         var zPos = Random.Range(min, max);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
         playerClone.GetComponent<JoystickPlayerExample>().fixedJoystick = this.fixedJoystick;
-        listDelete.Add(playerClone);
+        //listDelete.Add(playerClone);
     }
-    public void DrawmF1(int maxOneColor, Vector3 originalBrick, int maxCol, int maxRow )
+    public void DrawmFloor(int maxOneColor, Vector3 originalBrick, int maxCol, int maxRow )
     {
-        //Tạo list obj map cũ => clear khi tạo map mới
-        if (listDelete != null)
-        {
-            foreach (var i in listDelete)
-            {
-                Destroy(i);
-            }
-            listDelete.Clear(); 
-        }
+        ////Tạo list obj map cũ => clear khi tạo map mới
+        //if (listDelete != null)
+        //{
+        //    foreach (var i in listDelete)
+        //    {
+        //        Destroy(i);
+        //    }
+        //    listDelete.Clear(); 
+        //}
+
+        //Vẽ ground
+        GameObject groundClone = Instantiate(groundCubePrefab, originalBrick , Quaternion.identity); ;
+        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxCol + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxRow + 2));
+        groundClone.transform.position = new Vector3(originalBrick.x + maxCol/2 - 0.5f, originalBrick.y, originalBrick.z + maxRow/2 - 0.5f);
 
         //Tạo list chứa tất cả brick có màu
+        if (numbers != null)
+        {
+            numbers.Clear();
+        }
         for (int i = 0; i < maxOneColor; i++)
         {
             numbers.Add(0);
@@ -93,9 +102,9 @@ public class LevelManager : MonoBehaviour
         //Tạo brick có màu trong ma trận 2 chiều
         int index = 0;
         GameObject brickClone = null;
-        for (int i = (int)originalBrick.x; i < maxCol; i++)
+        for (int i = (int)originalBrick.x; i < (maxCol + (int)originalBrick.x); i++)
         {
-            for (int j = (int)originalBrick.z; j < maxRow; j++)
+            for (int j = (int)originalBrick.z; j < (maxRow + (int)originalBrick.z); j++)
             {
                 if(index < numbers.Count)
                 {
@@ -115,29 +124,29 @@ public class LevelManager : MonoBehaviour
                     {
                         brickClone = brickPrefabYellow;
                     }
-                    Instantiate(brickClone, new Vector3(i, 0.5f, j), Quaternion.identity);
+                    Instantiate(brickClone, new Vector3(i, originalBrick.y + 0.55f, j), Quaternion.identity);
                     index++;
-                    listDelete.Add(brickClone);
+                    //listDelete.Add(brickClone);
                 }  
             }
         }
     }
 
-    //Tạo ground theo Vector brick gốc
-    public void DrawG1(Vector3 originalPos, int maxSize)
-    {
-        for (int i = (int)originalPos.x; i <= maxSize + 1; i++)
-        {
-            for (int j = (int)originalPos.z; j <= maxSize + 1; j++)
-            {
-                GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i - 1, 0, j - 1), Quaternion.identity);
-                listDelete.Add(groundClone);
-                Debug.Log("G1");
-            }
-        }
-    }
+    ////Tạo ground theo Vector brick gốc
+    //public void DrawGround(Vector3 originalPos, int maxSizeCol, int maxSizeRow)
+    //{
+    //    for (int i = (int)originalPos.x; i <= maxSizeCol + 1; i++)
+    //    {
+    //        for (int j = (int)originalPos.z; j <= maxSizeRow + 1; j++)
+    //        {
+    //            GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i - 1, 0, j - 1), Quaternion.identity);
+    //            listDelete.Add(groundClone);
+    //            Debug.Log("G1");
+    //        }
+    //    }
+    //}
     //Tạo bridgeF1 theo vector brick gốc
-    public void DrawBridgeF1(Vector3 originalBridge, int sizeBridge)
+    public void DrawBridge(Vector3 originalBridge, int sizeBridge)
     {
         for (int i = (int)originalBridge.z; i < sizeBridge; i++)
         {

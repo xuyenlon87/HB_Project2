@@ -8,9 +8,10 @@ public class StartState : IState
     public void OnEnter(GameManager gameManager)
     {
 
-        LevelManager.Instance.DrawmF1(25, Vector3.zero, 10, 10);
-        LevelManager.Instance.DrawG1(Vector3.zero, 10);
-        LevelManager.Instance.DrawBridgeF1(new Vector3(0f, 0.45f, 11f), 30);
+        LevelManager.Instance.DrawmFloor(25, Vector3.zero, 5, 7);
+        LevelManager.Instance.DrawBridge(new Vector3(0f, 0.45f, 11f), 30);
+        LevelManager.Instance.DrawBridge(new Vector3(10f, 0.45f, 11f), 30);
+        //LevelManager.Instance.DrawmFloor(25, new Vector3(0f, 1.8f, 31f), 10, 10);
         LevelManager.Instance.SpawmPlayer(1, 8);
         LevelManager.Instance.playerClone.GetComponent<Player>().enabled = false;
     }
@@ -18,7 +19,7 @@ public class StartState : IState
     public void OnExecute(GameManager gameManager)
     {
         timer += Time.deltaTime;
-        if(timer >= 1f)
+        if(timer >= 2f)
         {
             GameManager.Instance.ChangeState(new PlayState());
         }

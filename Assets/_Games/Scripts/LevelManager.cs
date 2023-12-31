@@ -5,13 +5,14 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject groundCubePrefab;
+    [SerializeField] private GameObject groundSquarePrefab;
     [SerializeField] GameObject brickPrefabGreen;
     [SerializeField] GameObject brickPrefabRed;
     [SerializeField] GameObject brickPrefabBlue;
     [SerializeField] GameObject brickPrefabYellow;
     [SerializeField] GameObject brickBridgePrefab;
     [SerializeField] GameObject playerPrefab;
-    [SerializeField] private List<int> numbers = new List<int>();
+    //[SerializeField] private List<int> numbers = new List<int>();
 
     public static LevelManager Instance
     {
@@ -67,26 +68,17 @@ public class LevelManager : MonoBehaviour
         var zPos = Random.Range(minZ, maxZ);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
         playerClone.GetComponent<JoystickPlayerExample>().fixedJoystick = this.fixedJoystick;
-        //listDelete.Add(playerClone);
+        listDelete.Add(playerClone);
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
     {
-        ////Tạo list obj map cũ => clear khi tạo map mới
-        //if (listDelete != null)
-        //{
-        //    foreach (var i in listDelete)
-        //    {
-        //        Destroy(i);
-        //    }
-        //    listDelete.Clear(); 
-        //}
-
         //Vẽ ground
         GameObject groundClone = Instantiate(groundCubePrefab, originalBrick , Quaternion.identity); ;
         groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxRow + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxCol + 2));
         groundClone.transform.position = new Vector3(originalBrick.x + 0.5f, originalBrick.y, originalBrick.z + 0.5f);
 
         //Tạo list chứa tất cả brick có màu
+        List<int> numbers = new List<int>();
         if (numbers != null)
         {
             numbers.Clear();
@@ -128,26 +120,12 @@ public class LevelManager : MonoBehaviour
                     float zPos = originalBrick.z + (j - maxCol/2 )+1 ; // Tính toán vị trí theo cột
                     Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
                     index++;
-                    // listDelete.Add(brickClone);
+                    listDelete.Add(brickClone);
                 }
             }
         }
     }
 
-    ////Tạo ground theo Vector brick gốc
-    //public void DrawGround(Vector3 originalPos, int maxSizeCol, int maxSizeRow)
-    //{
-    //    for (int i = (int)originalPos.x; i <= maxSizeCol + 1; i++)
-    //    {
-    //        for (int j = (int)originalPos.z; j <= maxSizeRow + 1; j++)
-    //        {
-    //            GameObject groundClone = Instantiate(groundCubePrefab, new Vector3(i - 1, 0, j - 1), Quaternion.identity);
-    //            listDelete.Add(groundClone);
-    //            Debug.Log("G1");
-    //        }
-    //    }
-    //}
-    //Tạo bridgeF1 theo vector brick gốc
     public void DrawBridge(Vector3 originalBridge, int sizeBridge)
     {
         for (int i = 0; i < sizeBridge; i++)
@@ -157,7 +135,6 @@ public class LevelManager : MonoBehaviour
             originalBridge.y += 0.1f;
         }
     }
-
     private void Suffle(List<int> list)
     {
         for (int i = list.Count-1; i > 0; i--)
@@ -192,6 +169,62 @@ public class LevelManager : MonoBehaviour
         }
         Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
         listSpawmBrick.Remove(listSpawmBrick[0]);
+        listDelete.Add(brickClone);
     }
 
+    public void DrawCircleFloor(Vector3 originalCenter, int radius, int maxOneColor)
+    {
+        //Vẽ ground
+        GameObject groundClone = Instantiate(groundCubePrefab, originalCenter, Quaternion.identity); ;
+        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (radius * 2) + 2, groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (radius * 2) + 2);
+        groundClone.transform.position = new Vector3(originalCenter.x, originalCenter.y, originalCenter.z);
+
+        List<int> numbers = new List<int>();
+        if (numbers != null)
+        {
+            numbers.Clear();
+        }
+        for (int i = 0; i < maxOneColor; i++)
+        {
+            numbers.Add(0);
+            numbers.Add(1);
+            numbers.Add(2);
+            numbers.Add(3);
+        }
+        Suffle(numbers);
+        GameObject brickClone = null;
+        //Tạo brick có màu trong ma trận 2 chiều
+        int index = 0;
+        for (int i = -radius; i <= radius; i++)
+        {
+            for (int j = -radius; j <= radius; j++)
+            {
+                if (i * i + j * j <= radius * radius)
+                {
+                    if (index < numbers.Count)
+                    {
+                        if (numbers[index] == 0)
+                        {
+                            brickClone = brickPrefabBlue;
+                        }
+                        else if (numbers[index] == 1)
+                        {
+                            brickClone = brickPrefabRed;
+                        }
+                        else if (numbers[index] == 2)
+                        {
+                            brickClone = brickPrefabGreen;
+                        }
+                        else if (numbers[index] == 3)
+                        {
+                            brickClone = brickPrefabYellow;
+                        }
+                        Instantiate(brickClone, new Vector3(originalCenter.x + i, originalCenter.y + 0.55f, originalCenter.z + j), Quaternion.identity);
+                        index++;
+                        // listDelete.Add(brickClone);
+                    }
+                }
+            }
+        }
+    }
 }

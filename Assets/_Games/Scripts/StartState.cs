@@ -16,6 +16,7 @@ public class StartState : IState
         LevelManager.Instance.DrawmFloor(new Vector3(12, 2.4f, 57.5f), 5, 5, 0);//y sàn 3 = (sizeBridge 2 lên 3) *0.1f - 0.1 + y sàn 2; z sàn 3 = size cầu 2 + z cầu 2 + col/2
         LevelManager.Instance.SpawmPlayer(8,17,6,14);//random trong khoảng x +- row/2 và z +- col/2 của sàn 1
         LevelManager.Instance.playerClone.GetComponent<Player>().enabled = false;
+        LevelManager.Instance.DrawCircleFloor(new Vector3(20, 0, 100), 10, 100);
     }
 
     public void OnExecute(GameManager gameManager)

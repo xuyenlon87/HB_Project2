@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3535993825241502551}
   - component: {fileID: 3535993825241502550}
   - component: {fileID: 3535993825241502549}
+  - component: {fileID: 8437011607971248283}
   m_Layer: 6
   m_Name: CubeBridge
-  m_TagString: BlackBrick
+  m_TagString: BridgeBrick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3535993825241502555}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.054409962, y: 0, z: 0, w: 0.9985187}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -33,7 +34,7 @@ Transform:
   - {fileID: 5657106373537140414}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.238, y: 0, z: 0}
 --- !u!33 &3535993825241502550
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84,6 +85,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8437011607971248283
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3535993825241502555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4573282504112701161
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5657106373537140414
 Transform:
   m_ObjectHideFlags: 0

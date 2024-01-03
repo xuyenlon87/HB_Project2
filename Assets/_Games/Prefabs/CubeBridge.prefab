@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3535993825241502551}
   - component: {fileID: 3535993825241502550}
   - component: {fileID: 3535993825241502549}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CubeBridge
   m_TagString: BlackBrick
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2932483114410222610}
   - component: {fileID: 6250610872853198703}
   - component: {fileID: 2540027203265940585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CubeBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

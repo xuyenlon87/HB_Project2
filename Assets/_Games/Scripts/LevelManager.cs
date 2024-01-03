@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> listDelete = new List<GameObject>();
     public List<Vector3> listSpawmBrick;
     public FixedJoystick fixedJoystick;
+
     private static LevelManager instance;
     private float timer;
 
@@ -67,7 +68,6 @@ public class LevelManager : MonoBehaviour
         var xPos = Random.Range(minX, maxX);
         var zPos = Random.Range(minZ, maxZ);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
-        playerClone.GetComponent<JoystickPlayerExample>().fixedJoystick = this.fixedJoystick;
         listDelete.Add(playerClone);
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)

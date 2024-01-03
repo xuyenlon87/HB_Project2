@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1668978175088403959}
   - component: {fileID: 764525961962278570}
   - component: {fileID: 3076468530963593}
-  - component: {fileID: 7771138286059554327}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -66,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,21 +131,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   back: {fileID: 4667132418484562638}
   brickOnPlayer: []
---- !u!114 &7771138286059554327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816646117523639338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   ground:
     serializedVersion: 2
     m_Bits: 8
+  bridge:
+    serializedVersion: 2
+    m_Bits: 64
+  ColorBrick: {fileID: 2100000, guid: 5f3d72eb288b8c74ca75ae9beeba002a, type: 2}
   speed: 5
   fixedJoystick: {fileID: 0}
   rb: {fileID: 764525961962278570}

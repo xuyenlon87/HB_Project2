@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask bridge;
     [SerializeField] private Material ColorBrick;
     [SerializeField] private List<GameObject> listBackBrick = new List<GameObject>();
+    [SerializeField] private bool canMove = true;
 
     public float speed;
     public FixedJoystick fixedJoystick;
@@ -27,22 +28,9 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal;
         Vector3 targetPos = transform.position + transform.forward * 0.5f;
-        if (Physics.Raycast(targetPos, Vector3.down, out hit, 10f, bridge))
-        {
-            Renderer renderer = hit.collider.GetComponent<Renderer>();
-            Debug.DrawRay(targetPos, Vector3.down * hit.distance, Color.black, 10f);
-            if (renderer.material != ColorBrick)
-            {
-                if (listBackBrick.Count > 0)
-                {
-                    renderer.material = ColorBrick;
-                    Debug.Log(renderer);
-                }
-            }
-        }
-
         rb.velocity = direction * speed;
         transform.rotation = Quaternion.LookRotation(rb.velocity);
+        Debug.DrawRay(targetPos, Vector3.down * hit.distance, Color.black, 10f);
     }
     public void FixedUpdate()
     {
@@ -68,11 +56,15 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("BridgeBrick"))
         {
             Renderer renderer = collision.collider.GetComponent<Renderer>();
-            if (renderer != ColorBrick)
+            if (renderer.material != ColorBrick)
             {
-                Destroy(listBackBrick[listBackBrick.Count - 1]);
-                listBackBrick.RemoveAt(listBackBrick.Count - 1);
-                posYBack.y -= 0.1f;
+                if (listBackBrick.Count > 0)
+                {
+                    renderer.material = ColorBrick;
+                    Destroy(listBackBrick[listBackBrick.Count - 1]);
+                    listBackBrick.RemoveAt(listBackBrick.Count - 1);
+                    posYBack.y -= 0.1f;
+                }
             }
         }
     }

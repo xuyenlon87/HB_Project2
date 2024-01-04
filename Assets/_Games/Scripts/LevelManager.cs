@@ -63,11 +63,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void SpawmPlayer(float minX, float maxX, float minZ, float maxZ )
+    public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ )
     {
         var xPos = Random.Range(minX, maxX);
         var zPos = Random.Range(minZ, maxZ);
-        playerClone = Instantiate(playerPrefab, new Vector3(xPos, 1.5f, zPos), Quaternion.identity);
+        playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
         listDelete.Add(playerClone);
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)

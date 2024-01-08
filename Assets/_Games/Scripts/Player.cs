@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask bridge;
     [SerializeField] private Material ColorBrick;
     [SerializeField] private List<GameObject> listBackBrick = new List<GameObject>();
+    [SerializeField] private bool canMove;
 
     public float speed;
     public FixedJoystick fixedJoystick;
@@ -37,7 +38,8 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        targetPos = transform.position + transform.forward * 0.5f;
+        direction = Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal;
+        targetPos = transform.position + direction * 0.5f;
         Physics.Raycast(targetPos, Vector3.down, out hit, 10f);
         if (hit.collider)
         {
@@ -46,19 +48,18 @@ public class Player : MonoBehaviour
                 if (listBackBrick.Count <= 0)
                 {
                     rb.velocity = Vector3.zero;
-                    targetPos = transform.position - transform.forward * 0.5f;
                 }
             }
             else
             {
-                direction = Vector3.forward * fixedJoystick.Vertical + Vector3.right * fixedJoystick.Horizontal;
                 rb.velocity = direction * speed;
+                Debug.Log("hit");
             }
         }
         if (!hit.collider)
         {
             rb.velocity = Vector3.zero;
-            targetPos = transform.position - transform.forward * 0.5f;
+            Debug.Log("no hit");
         }
         if (rb.velocity.magnitude > 0)
         {

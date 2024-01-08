@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject brickPrefabYellow;
     [SerializeField] GameObject brickBridgePrefab;
     [SerializeField] GameObject playerPrefab;
-    //[SerializeField] private List<int> numbers = new List<int>();
+    [SerializeField] GameObject botPrefab;
 
     public static LevelManager Instance
     {
@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour
         }
     }
     public GameObject playerClone;
+    public GameObject botClone;
     public List<GameObject> listDelete = new List<GameObject>();
     public List<Vector3> listSpawmBrick;
     public FixedJoystick fixedJoystick;
@@ -47,7 +48,7 @@ public class LevelManager : MonoBehaviour
     }
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -65,10 +66,22 @@ public class LevelManager : MonoBehaviour
 
     public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ )
     {
-        var xPos = Random.Range(minX, maxX);
-        var zPos = Random.Range(minZ, maxZ);
-        playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
-        listDelete.Add(playerClone);
+        for (int i = 0; i < 3; i++)
+        {
+            var xPos = Random.Range(minX, maxX);
+            var zPos = Random.Range(minZ, maxZ);
+            if (i == 0)
+            {
+                playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+                listDelete.Add(playerClone);
+            }
+            else
+            {
+                botClone = Instantiate(botPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+                listDelete.Add(botClone);
+            }
+            listDelete.Add(playerClone);
+        }
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
     {

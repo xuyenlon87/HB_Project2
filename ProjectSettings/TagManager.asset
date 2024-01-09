@@ -11,6 +11,8 @@ TagManager:
   - GroundBrick
   - BlackBrick
   - BridgeBrick
+  - FxTemporaire
+  - Brick
   layers:
   - Default
   - TransparentFX

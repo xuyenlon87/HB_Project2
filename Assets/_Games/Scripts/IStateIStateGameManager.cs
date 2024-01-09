@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IState
+public interface IStateGameManager
 {
     public void OnEnter(GameManager gameManager)
     {

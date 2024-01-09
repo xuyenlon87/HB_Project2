@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartState : IState
+public class StartState : IStateGameManager
 {
     private float timer = 0;
     public void OnEnter(GameManager gameManager)

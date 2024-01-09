@@ -12,7 +12,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject brickPrefabYellow;
     [SerializeField] GameObject brickBridgePrefab;
     [SerializeField] GameObject playerPrefab;
-    [SerializeField] GameObject botPrefab;
+    [SerializeField] GameObject redBotPrefab;
+    [SerializeField] GameObject greenBotPrefab;
+    [SerializeField] GameObject YellowBotPrefab;
 
     public static LevelManager Instance
     {
@@ -66,7 +68,7 @@ public class LevelManager : MonoBehaviour
 
     public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ )
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             var xPos = Random.Range(minX, maxX);
             var zPos = Random.Range(minZ, maxZ);
@@ -75,12 +77,21 @@ public class LevelManager : MonoBehaviour
                 playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
                 listDelete.Add(playerClone);
             }
-            else
+            else if (i == 1)
             {
-                botClone = Instantiate(botPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+                botClone = Instantiate(redBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
                 listDelete.Add(botClone);
             }
-            listDelete.Add(playerClone);
+            else if (i == 2)
+            {
+                botClone = Instantiate(greenBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+                listDelete.Add(botClone);
+            }
+            else if (i == 3)
+            {
+                botClone = Instantiate(YellowBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+                listDelete.Add(botClone);
+            }
         }
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)

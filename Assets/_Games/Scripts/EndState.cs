@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndState : IState
+public class EndState : IStateGameManager
 {
     public void OnEnter(GameManager gameManager)
     {

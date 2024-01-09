@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseState : IState
+public class PauseState : IStateGameManager
 {
     public void OnEnter(GameManager gameManager)
     {

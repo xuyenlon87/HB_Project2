@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    [SerializeField] GameObject back;
     [SerializeField] LayerMask ground;
     [SerializeField] LayerMask bridge;
-    [SerializeField] private Material ColorBrick;
-    [SerializeField] private List<GameObject> listBackBrick = new List<GameObject>();
-    [SerializeField] private bool canMove;
 
-    public float speed;
     public FixedJoystick fixedJoystick;
     public Rigidbody rb;
 
     private RaycastHit hit;
-    private Vector3 posYBack = Vector3.zero;
     private Vector3 targetPos;
     private Vector3 direction;
     // Start is called before the first frame update
@@ -53,7 +47,6 @@ public class Player : MonoBehaviour
             else
             {
                 rb.velocity = direction * speed;
-                Debug.Log("hit");
             }
         }
         if (!hit.collider)
@@ -65,42 +58,6 @@ public class Player : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(rb.velocity);
         }
-        Debug.DrawRay(targetPos, Vector3.down * hit.distance, Color.black, 10f);
-        Debug.Log(direction);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("BlueBrick"))
-        {
-            LevelManager.Instance.listSpawmBrick.Add(other.transform.position);
-            listBackBrick.Add(other.gameObject);
-            other.transform.parent = back.transform;
-            other.transform.localRotation = Quaternion.identity;
-            other.transform.localPosition = new Vector3(0, posYBack.y , 0);
-            posYBack.y += 0.1f;
-            other.GetComponent<Renderer>().material = ColorBrick;
-        }
-
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("BridgeBrick"))
-        {
-            Renderer renderer = collision.collider.GetComponent<Renderer>();
-            if (renderer.material != ColorBrick)
-            {
-                if (listBackBrick.Count > 0)
-                {
-                    renderer.material = ColorBrick;
-                    collision.gameObject.layer = LayerMask.NameToLayer("Ground");
-                    collision.gameObject.tag = "GroundBrick";
-                    var del = listBackBrick.Count - 1;
-                    Destroy(listBackBrick[del]);
-                    listBackBrick.RemoveAt(del);
-                    posYBack.y -= 0.1f;
-                }
-            }
-        }
-    }
+   
 }

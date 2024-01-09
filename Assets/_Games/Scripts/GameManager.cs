@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private IState currentState;
+    private IStateGameManager currentState;
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChangeState(IState newState)
+    public void ChangeState(IStateGameManager newState)
     {
         if (currentState != null)
         {

@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Bot : Character
 {
-    private Transform target;
+    public NavMeshAgent navMesh;
+    public GameObject target;
     private IState<Bot> currentState;
     // Start is called before the first frame update
     void Start()
     {
         ChangeState(new IdleState());
+        navMesh = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -19,7 +22,6 @@ public class Bot : Character
         {
             currentState.OnExecute(this);
         }
-
     }
     public void ChangeState(IState<Bot> state)
     {

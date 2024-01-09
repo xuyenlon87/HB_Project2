@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 76f23c30c29daea4dbee9d3c2111a33d, type: 2}
 --- !u!1 &106807690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   YellowBotPrefab: {fileID: 2236230587846263074, guid: 6ba1dc62eec88dc4d8b1668a82ac2188, type: 3}
   playerClone: {fileID: 0}
   botClone: {fileID: 0}
-  listDelete: []
+  listPositionBrick: []
   listSpawmBrick: []
   fixedJoystick: {fileID: 2019750357}
 --- !u!224 &1738224979 stripped
@@ -1168,8 +1168,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
 --- !u!65 &1936870928
 BoxCollider:
   m_ObjectHideFlags: 0

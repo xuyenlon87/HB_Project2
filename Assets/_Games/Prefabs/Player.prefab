@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3076468530963593}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,16 +130,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   back: {fileID: 4667132418484562638}
+  ColorBrick: {fileID: 2100000, guid: 5f3d72eb288b8c74ca75ae9beeba002a, type: 2}
+  listBackBrick: []
+  posYBack: {x: 0, y: 0, z: 0}
+  speed: 5
   ground:
     serializedVersion: 2
     m_Bits: 8
   bridge:
     serializedVersion: 2
     m_Bits: 64
-  ColorBrick: {fileID: 2100000, guid: 5f3d72eb288b8c74ca75ae9beeba002a, type: 2}
-  listBackBrick: []
-  canMove: 1
-  speed: 5
   fixedJoystick: {fileID: 0}
   rb: {fileID: 764525961962278570}
 --- !u!1 &4667132418484562638

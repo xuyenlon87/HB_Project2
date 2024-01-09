@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject redBotPrefab;
     [SerializeField] GameObject greenBotPrefab;
     [SerializeField] GameObject YellowBotPrefab;
+    NavMeshBuildSettings settings = new NavMeshBuildSettings();
 
     public static LevelManager Instance
     {
@@ -29,7 +31,7 @@ public class LevelManager : MonoBehaviour
     }
     public GameObject playerClone;
     public GameObject botClone;
-    public List<GameObject> listDelete = new List<GameObject>();
+    public List<Vector3> listPositionBrick = new List<Vector3>();
     public List<Vector3> listSpawmBrick;
     public FixedJoystick fixedJoystick;
 
@@ -68,30 +70,26 @@ public class LevelManager : MonoBehaviour
 
     public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ )
     {
-        for (int i = 0; i < 4; i++)
+        var xPos = Random.Range(minX, maxX);
+        var zPos = Random.Range(minZ, maxZ);
+        playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+        for (int i = 0; i < 3; i++)
         {
-            var xPos = Random.Range(minX, maxX);
-            var zPos = Random.Range(minZ, maxZ);
+            xPos = Random.Range(minX, maxX);
+            zPos = Random.Range(minZ, maxZ);
             if (i == 0)
             {
-                playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
-                listDelete.Add(playerClone);
+                botClone = redBotPrefab;
             }
             else if (i == 1)
             {
-                botClone = Instantiate(redBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
-                listDelete.Add(botClone);
+                botClone = greenBotPrefab;
             }
             else if (i == 2)
             {
-                botClone = Instantiate(greenBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
-                listDelete.Add(botClone);
+                botClone = YellowBotPrefab;
             }
-            else if (i == 3)
-            {
-                botClone = Instantiate(YellowBotPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
-                listDelete.Add(botClone);
-            }
+            Instantiate(botClone, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
         }
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
@@ -144,7 +142,7 @@ public class LevelManager : MonoBehaviour
                     float zPos = originalBrick.z + (j - maxCol/2 )+1 ; // Tính toán vị trí theo cột
                     Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
                     index++;
-                    listDelete.Add(brickClone);
+                    listPositionBrick.Add(brickClone.transform.position);
                 }
             }
         }
@@ -155,7 +153,6 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < sizeBridge; i++)
         {
             GameObject bridgeClone = Instantiate(brickBridgePrefab, new Vector3(originalBridge.x, originalBridge.y, originalBridge.z + i), Quaternion.identity);
-            listDelete.Add(bridgeClone);
             originalBridge.y += 0.1f;
         }
     }
@@ -193,7 +190,6 @@ public class LevelManager : MonoBehaviour
         }
         Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
         listSpawmBrick.Remove(listSpawmBrick[0]);
-        listDelete.Add(brickClone);
     }
 
     public void DrawCircleFloor(Vector3 originalCenter, int radius, int maxOneColor)
@@ -245,7 +241,6 @@ public class LevelManager : MonoBehaviour
                         }
                         Instantiate(brickClone, new Vector3(originalCenter.x + i, originalCenter.y + 0.55f, originalCenter.z + j), Quaternion.identity);
                         index++;
-                        // listDelete.Add(brickClone);
                     }
                 }
             }

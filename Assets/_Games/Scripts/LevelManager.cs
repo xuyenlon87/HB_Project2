@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour
     public List<Vector3> listPositionBrick = new List<Vector3>();
     public List<Vector3> listSpawmBrick;
     public FixedJoystick fixedJoystick;
-
+    public GameObject map1;
     private static LevelManager instance;
     private float timer;
     private MiniPool<Brick> poolSpawmBrick;

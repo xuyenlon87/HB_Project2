@@ -8,5 +8,6 @@ public class MainMenu : UICanvas
     {
         UIManager.Ins.OpenUI<GamePlay>();
         Close(0);
+        LevelManager.Instance.map1.SetActive(true);
     }
 }

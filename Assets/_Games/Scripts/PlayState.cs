@@ -6,7 +6,7 @@ public class PlayState : IStateGameManager
 {
     public void OnEnter(GameManager gameManager)
     {
-        LevelManager.Instance.playerClone.GetComponent<Player>().enabled = true;
+        
     }
 
     public void OnExecute(GameManager gameManager)

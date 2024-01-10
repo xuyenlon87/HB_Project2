@@ -3417,7 +3417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1343068266
 Transform:
   m_ObjectHideFlags: 0
@@ -3879,6 +3879,7 @@ MonoBehaviour:
   listPositionBrick: []
   listSpawmBrick: []
   fixedJoystick: {fileID: 2019750357}
+  map1: {fileID: 1343068265}
 --- !u!1001 &1609514585
 PrefabInstance:
   m_ObjectHideFlags: 0

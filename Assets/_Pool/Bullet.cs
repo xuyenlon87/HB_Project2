@@ -8,7 +8,7 @@ public class Bullet : GameUnit
 
     public void OnInit()
     {
-        rb.velocity = Vector3.forward * 5f;
+        rb.velocity = Vector3.right * 5f;
     }
 
     public void OnDespawn()

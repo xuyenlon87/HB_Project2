@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using EZ_Pooling;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject redBotPrefab;
     [SerializeField] GameObject greenBotPrefab;
     [SerializeField] GameObject YellowBotPrefab;
-    NavMeshBuildSettings settings = new NavMeshBuildSettings();
 
     public static LevelManager Instance
     {
@@ -49,10 +49,10 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour
                     float zPos = originalBrick.z + (j - maxCol/2 )+1 ; // Tính toán vị trí theo cột
                     Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
                     index++;
-                    listPositionBrick.Add(brickClone.transform.position);
+                    listPositionBrick.Add(new Vector3(xPos, originalBrick.y + 0.55f, zPos));
                 }
             }
         }

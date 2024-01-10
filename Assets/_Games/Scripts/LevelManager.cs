@@ -98,10 +98,10 @@ public class LevelManager : MonoBehaviour
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
     {
-        //Vẽ ground
-        GameObject groundClone = Instantiate(groundCubePrefab, originalBrick , Quaternion.identity); ;
-        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxRow + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxCol + 2));
-        groundClone.transform.position = new Vector3(originalBrick.x + 0.5f, originalBrick.y, originalBrick.z + 0.5f);
+        ////Vẽ ground
+        //GameObject groundClone = Instantiate(groundCubePrefab, originalBrick, Quaternion.identity); ;
+        //groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (maxRow + 2), groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (maxCol + 2));
+        //groundClone.transform.position = new Vector3(originalBrick.x + 0.5f, originalBrick.y, originalBrick.z + 0.5f);
 
         //Tạo list chứa tất cả brick có màu
         List<int> numbers = new List<int>();
@@ -142,8 +142,8 @@ public class LevelManager : MonoBehaviour
                     {
                         brickClone = brickPrefabYellow;
                     }
-                    float xPos = originalBrick.x + (i - maxRow/2 )+1 ; // Tính toán vị trí theo hàng
-                    float zPos = originalBrick.z + (j - maxCol/2 )+1 ; // Tính toán vị trí theo cột
+                    float xPos = originalBrick.x + (i - maxRow/2 )+0.5f ; // Tính toán vị trí theo hàng
+                    float zPos = originalBrick.z + (j - maxCol/2 )+0.5f ; // Tính toán vị trí theo cột
                     Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
                     index++;
                     listPositionBrick.Add(new Vector3(xPos, originalBrick.y + 0.55f, zPos));
@@ -199,6 +199,7 @@ public class LevelManager : MonoBehaviour
 
     public void DrawCircleFloor(Vector3 originalCenter, int radius, int maxOneColor)
     {
+        //NavMesh.AddNavMeshData()
         //Vẽ ground
         GameObject groundClone = Instantiate(groundCubePrefab, originalCenter, Quaternion.identity); ;
         groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (radius * 2) + 2, groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (radius * 2) + 2);

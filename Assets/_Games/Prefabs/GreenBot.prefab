@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2345878315995169688}
   - component: {fileID: 8227138155089229710}
   - component: {fileID: 2218904752282589288}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GreenBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,8 @@ MonoBehaviour:
   listBackBrick: []
   posYBack: {x: 0, y: 0, z: 0}
   speed: 0
+  navMesh: {fileID: 0}
+  target: {fileID: 0}
 --- !u!195 &2218904752282589288
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -167,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5874628861457396204}
   - component: {fileID: 3031520312578188044}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}

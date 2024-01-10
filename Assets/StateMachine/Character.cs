@@ -61,5 +61,9 @@ public class Character : MonoBehaviour
                 }
             }
         }
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+
+        }
     }
 }

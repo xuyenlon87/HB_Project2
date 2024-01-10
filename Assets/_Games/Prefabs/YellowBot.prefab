@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 910445742109557666}
   - component: {fileID: -1156105433854656908}
   - component: {fileID: -5929486186955818505}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: YellowBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,8 @@ MonoBehaviour:
   listBackBrick: []
   posYBack: {x: 0, y: 0, z: 0}
   speed: 0
+  navMesh: {fileID: 0}
+  target: {fileID: 0}
 --- !u!195 &-5929486186955818505
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -167,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9055166141277073878}
   - component: {fileID: 449983773648373949}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}

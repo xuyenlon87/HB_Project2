@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669542972948750959}
   - component: {fileID: 7836166620883246310}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7359880464613494811}
   - component: {fileID: -3162058353934835330}
   - component: {fileID: -5535434780938061015}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedBot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,6 +209,8 @@ MonoBehaviour:
   listBackBrick: []
   posYBack: {x: 0, y: 0, z: 0}
   speed: 0
+  navMesh: {fileID: 0}
+  target: {fileID: 0}
 --- !u!195 &-5535434780938061015
 NavMeshAgent:
   m_ObjectHideFlags: 0

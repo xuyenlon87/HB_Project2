@@ -17,6 +17,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject redBotPrefab;
     [SerializeField] GameObject greenBotPrefab;
     [SerializeField] GameObject YellowBotPrefab;
+    [SerializeField] private Brick prefabBrick;
+    
 
     public static LevelManager Instance
     {
@@ -37,6 +39,7 @@ public class LevelManager : MonoBehaviour
 
     private static LevelManager instance;
     private float timer;
+    private MiniPool<Brick> poolSpawmBrick;
 
     void Awake()
     {
@@ -49,7 +52,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        poolSpawmBrick = new MiniPool<Brick>();
+        poolSpawmBrick.OnInit(prefabBrick, 1000);
     }
     void Start()
     {
@@ -171,24 +175,25 @@ public class LevelManager : MonoBehaviour
     private void SpawmBrick()
     {
         timer = 0;
-        int randomColor = Random.Range(0, 4);
-        GameObject brickClone = null;
-        switch (randomColor)
-        {
-            case 0:
-                brickClone = brickPrefabBlue;            
-                break;
-            case 1:
-                brickClone = brickPrefabRed;
-                break;
-            case 2:
-                brickClone = brickPrefabGreen;
-                break;
-            case 3:
-                brickClone = brickPrefabYellow;
-                break;
-        }
-        Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
+        //int randomColor = Random.Range(0, 4);
+        //GameObject brickClone = null;
+        //switch (randomColor)
+        //{
+        //    case 0:
+        //        brickClone = brickPrefabBlue;            
+        //        break;
+        //    case 1:
+        //        brickClone = brickPrefabRed;
+        //        break;
+        //    case 2:
+        //        brickClone = brickPrefabGreen;
+        //        break;
+        //    case 3:
+        //        brickClone = brickPrefabYellow;
+        //        break;
+        //}
+        //Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
+        poolSpawmBrick.Spawn(listSpawmBrick[0], Quaternion.identity);
         listSpawmBrick.Remove(listSpawmBrick[0]);
     }
 

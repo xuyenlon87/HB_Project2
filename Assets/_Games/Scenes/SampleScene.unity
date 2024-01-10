@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCubePrefab: {fileID: 3048606420916119127, guid: 5a560a1ac5bac854a96967b6f2c1c6ad, type: 3}
   groundSquarePrefab: {fileID: 0}
-  brickPrefabGreen: {fileID: 1858638637333668820, guid: 96548b9d49bf09340ac259cea0f46d34, type: 3}
+  brickPrefabGreen: {fileID: 1858638637333668820, guid: 894e48d546553ab48b072a33b51530c4, type: 3}
   brickPrefabRed: {fileID: 3523174439235608512, guid: 4fa9967506fb96f488ab46dffca6f736, type: 3}
   brickPrefabBlue: {fileID: 1519675779588831968, guid: 25d78fdf9dcc97240942f2b494ba8f20, type: 3}
   brickPrefabYellow: {fileID: 5967337660095448629, guid: 99daf3c0c7f917047afbcabdb1038e60, type: 3}
@@ -1043,6 +1043,7 @@ MonoBehaviour:
   redBotPrefab: {fileID: 8469491901338899099, guid: 4ee7739fab74557408d7ea90695e64da, type: 3}
   greenBotPrefab: {fileID: 3685098626904391960, guid: 7bf6789ee14955d43af9b21c0c2100b6, type: 3}
   YellowBotPrefab: {fileID: 2236230587846263074, guid: 6ba1dc62eec88dc4d8b1668a82ac2188, type: 3}
+  prefabBrick: {fileID: 8106242804015183823, guid: 96548b9d49bf09340ac259cea0f46d34, type: 3}
   playerClone: {fileID: 0}
   botClone: {fileID: 0}
   listPositionBrick: []

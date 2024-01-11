@@ -35,7 +35,6 @@ public class LevelManager : MonoBehaviour
     public GameObject botClone;
     public List<Vector3> listPositionBrick = new List<Vector3>();
     public List<Vector3> listSpawmBrick;
-    public FixedJoystick fixedJoystick;
     public GameObject map1;
     private static LevelManager instance;
     private float timer;
@@ -53,7 +52,7 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
         poolSpawmBrick = new MiniPool<Brick>();
-        poolSpawmBrick.OnInit(prefabBrick, 1000);
+        poolSpawmBrick.OnInit(prefabBrick, 1000, map1.transform);
     }
     void Start()
     {
@@ -72,11 +71,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ )
+    public void SpawmPlayer(int minX, int maxX, int minZ, int maxZ, Transform parent = null )
     {
         var xPos = Random.Range(minX, maxX);
         var zPos = Random.Range(minZ, maxZ);
-        playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+        playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
         for (int i = 0; i < 3; i++)
         {
             xPos = Random.Range(minX, maxX);
@@ -93,10 +92,10 @@ public class LevelManager : MonoBehaviour
             {
                 botClone = YellowBotPrefab;
             }
-            Instantiate(botClone, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity);
+            Instantiate(botClone, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
         }
     }
-    public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor)
+    public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor, Transform parent = null)
     {
         ////Vẽ ground
         //GameObject groundClone = Instantiate(groundCubePrefab, originalBrick, Quaternion.identity); ;
@@ -144,7 +143,7 @@ public class LevelManager : MonoBehaviour
                     }
                     float xPos = originalBrick.x + (i - maxRow/2 )+0.5f ; // Tính toán vị trí theo hàng
                     float zPos = originalBrick.z + (j - maxCol/2 )+0.5f ; // Tính toán vị trí theo cột
-                    Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity);
+                    Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity, parent.transform);
                     index++;
                     listPositionBrick.Add(new Vector3(xPos, originalBrick.y + 0.55f, zPos));
                 }
@@ -193,7 +192,7 @@ public class LevelManager : MonoBehaviour
         //        break;
         //}
         //Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
-        poolSpawmBrick.Spawn(listSpawmBrick[0], Quaternion.identity);
+        poolSpawmBrick.Spawn(listSpawmBrick[0], Quaternion.identity, map1.transform);
         listSpawmBrick.Remove(listSpawmBrick[0]);
     }
 

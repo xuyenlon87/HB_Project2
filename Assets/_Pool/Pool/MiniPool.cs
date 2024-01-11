@@ -21,12 +21,16 @@ public class MiniPool<T> where T : Component
         }
     }
 
-    public T Spawn(Vector3 pos, Quaternion rot)
+    public T Spawn(Vector3 pos, Quaternion rot, Transform parent = null)
     {
-        T go = pools.Count > 0 ? pools.Dequeue() : GameObject.Instantiate(prefab, parent);
+        T go = pools.Count > 0 ? pools.Dequeue() : GameObject.Instantiate(prefab);
 
         listActives.Add(go);
 
+        if (parent != null)
+        {
+            go.transform.SetParent(parent);
+        }
         go.transform.SetPositionAndRotation(pos, rot);
         go.gameObject.SetActive(true);
 

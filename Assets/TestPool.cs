@@ -26,7 +26,7 @@ public class TestPool : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             timer = 0;
-            prefabBullet = miniPool.Spawn(player.position + Vector3.one, Quaternion.identity);
+            prefabBullet = miniPool.Spawn(player.position + Vector3.one, Quaternion.identity, null);
         }
         if (timer >= 3f)
         {

@@ -16,7 +16,7 @@ public class Player : Character
     // Start is called before the first frame update
     void Start()
     {
-        fixedJoystick = LevelManager.Instance.fixedJoystick;
+        fixedJoystick = UIManager.Ins.GetUI<GamePlay>().GetComponentInChildren<FixedJoystick>();
     }
 
     // Update is called once per frame

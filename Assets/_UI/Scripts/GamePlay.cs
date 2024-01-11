@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GamePlay : UICanvas
 {
+    
     //public void WinButton()
     //{
     //    UIManager.Ins.OpenUI<Win>().score.text = Random.Range(100, 200).ToString();

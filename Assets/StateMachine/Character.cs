@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour
 {
     public GameObject back;
-    public Material ColorBrick;
+    public Material colorPlayer;
     public List<GameObject> listBackBrick = new List<GameObject>();
     public Vector3 posYBack = Vector3.zero;
     public float speed = 5;
@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        ColorBrick = new Material(back.GetComponent<Renderer>().material);
+        
     }
 
     // Update is called once per frame
@@ -29,15 +29,15 @@ public class Character : MonoBehaviour
         if (other.CompareTag("Brick"))
         {
             Renderer renderer = other.GetComponent<Renderer>();
-            if (renderer.material.color == ColorBrick.color)
+            if (renderer.material.color == colorPlayer.color)
             {
-                LevelManager.Instance.listSpawmBrick.Add(other.transform.position);
+                LevelManager.Instance.listSpawmBrickPosition.Add(other.transform.position);
                 listBackBrick.Add(other.gameObject);
                 other.transform.parent = back.transform;
                 other.transform.localRotation = Quaternion.identity;
                 other.transform.localPosition = new Vector3(0, posYBack.y, 0);
                 posYBack.y += 0.1f;
-                other.GetComponent<Renderer>().material = ColorBrick;
+                other.GetComponent<Renderer>().material = colorPlayer;
             }
         }
     }
@@ -47,11 +47,11 @@ public class Character : MonoBehaviour
         if (collision.gameObject.CompareTag("BridgeBrick"))
         {
             Renderer renderer = collision.collider.GetComponent<Renderer>();
-            if (renderer.material != ColorBrick)
+            if (renderer.material != colorPlayer)
             {
                 if (listBackBrick.Count > 0)
                 {
-                    renderer.material = ColorBrick;
+                    renderer.material = colorPlayer;
                     collision.gameObject.layer = LayerMask.NameToLayer("Ground");
                     collision.gameObject.tag = "GroundBrick";
                     var del = listBackBrick.Count - 1;

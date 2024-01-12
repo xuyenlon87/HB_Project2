@@ -13,6 +13,7 @@ public class Bot : Character
     {
         ChangeState(new IdleState());
         navMesh = GetComponent<NavMeshAgent>();
+        colorPlayer = new Material(gameObject.GetComponent<Renderer>().material);
     }
 
     // Update is called once per frame

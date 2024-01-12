@@ -17,6 +17,7 @@ public class Player : Character
     void Start()
     {
         fixedJoystick = UIManager.Ins.GetUI<GamePlay>().GetComponentInChildren<FixedJoystick>();
+        colorPlayer = new Material(gameObject.GetComponent<Renderer>().material);
     }
 
     // Update is called once per frame

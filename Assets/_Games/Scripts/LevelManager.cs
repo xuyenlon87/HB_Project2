@@ -7,16 +7,11 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject groundCubePrefab;
     [SerializeField] private GameObject groundSquarePrefab;
-    [SerializeField] GameObject brickPrefabGreen;
-    [SerializeField] GameObject brickPrefabRed;
-    [SerializeField] GameObject brickPrefabBlue;
-    [SerializeField] GameObject brickPrefabYellow;
     [SerializeField] GameObject brickBridgePrefab;
     [SerializeField] GameObject playerPrefab;
-    [SerializeField] GameObject redBotPrefab;
-    [SerializeField] GameObject greenBotPrefab;
-    [SerializeField] GameObject YellowBotPrefab;
+    [SerializeField] GameObject botPrefab;
     [SerializeField] private Brick prefabBrick;
+    [SerializeField] private GameObject brickPrefab;
     
 
     public static LevelManager Instance
@@ -31,13 +26,18 @@ public class LevelManager : MonoBehaviour
         }
     }
     public GameObject playerClone;
-    public GameObject botClone;
     public List<Vector3> listPositionBrick = new List<Vector3>();
-    public List<Vector3> listSpawmBrick;
+    public List<Material> listMaterial;
+    public List<GameObject> listRedBrick;
+    public List<GameObject> listYellowBrick;
+    public List<GameObject> listGreenBrick;
+    public List<GameObject> listBlueBrick;
+    public List<Vector3> listSpawmBrickPosition;
     public GameObject map1;
     private static LevelManager instance;
     private float timer;
     private MiniPool<Brick> poolSpawmBrick;
+
 
     void Awake()
     {
@@ -60,7 +60,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(listSpawmBrick.Count > 0)
+        if(listSpawmBrickPosition.Count > 0)
         {
             timer += Time.deltaTime;
             if (timer >= 0.5f)
@@ -75,21 +75,24 @@ public class LevelManager : MonoBehaviour
         var xPos = Random.Range(minX, maxX);
         var zPos = Random.Range(minZ, maxZ);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
-        for (int i = 0; i < 3; i++)
+
+        GameObject botClone = botPrefab;
+        Renderer color = botClone.GetComponent<Renderer>();
+        for (int i = 0; i < listMaterial.Count - 1; i++)
         {
             xPos = Random.Range(minX, maxX);
             zPos = Random.Range(minZ, maxZ);
             if (i == 0)
             {
-                botClone = redBotPrefab;
+                color.material = listMaterial[0];
             }
             else if (i == 1)
             {
-                botClone = greenBotPrefab;
+                color.material = listMaterial[1];
             }
             else if (i == 2)
             {
-                botClone = YellowBotPrefab;
+                color.material = listMaterial[2];
             }
             Instantiate(botClone, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
         }
@@ -117,7 +120,8 @@ public class LevelManager : MonoBehaviour
         Suffle(numbers);
         //Tạo brick có màu trong ma trận 2 chiều
         int index = 0;
-        GameObject brickClone = null;
+        GameObject brickClone = brickPrefab;
+        Renderer color = brickClone.GetComponent<Renderer>();
         for (int i = 0; i < maxRow; i++)
         {
             for (int j = 0; j < maxCol; j++)
@@ -126,19 +130,23 @@ public class LevelManager : MonoBehaviour
                 {
                     if (numbers[index] == 0)
                     {
-                        brickClone = brickPrefabBlue;
+                        color.material = listMaterial[0];
+                        listYellowBrick.Add(brickClone);
                     }
                     else if (numbers[index] == 1)
                     {
-                        brickClone = brickPrefabRed;
+                        color.material = listMaterial[1];
+                        listGreenBrick.Add(brickClone);
                     }
                     else if (numbers[index] == 2)
                     {
-                        brickClone = brickPrefabGreen;
+                        color.material = listMaterial[2];
+                        listRedBrick.Add(brickClone);
                     }
                     else if (numbers[index] == 3)
                     {
-                        brickClone = brickPrefabYellow;
+                        color.material = listMaterial[3];
+                        listBlueBrick.Add(brickClone);
                     }
                     float xPos = originalBrick.x + (i - maxRow/2 )+0.5f ; // Tính toán vị trí theo hàng
                     float zPos = originalBrick.z + (j - maxCol/2 )+0.5f ; // Tính toán vị trí theo cột
@@ -173,81 +181,82 @@ public class LevelManager : MonoBehaviour
     private void SpawmBrick()
     {
         timer = 0;
-        //int randomColor = Random.Range(0, 4);
-        //GameObject brickClone = null;
-        //switch (randomColor)
+        poolSpawmBrick.Spawn(listSpawmBrickPosition[0], Quaternion.identity, map1.transform);
+        //Renderer renderer = GetComponent<Renderer>();
+        //int random = Random.Range(0, listMaterial.Count - 1);
+        //renderer.material = listMaterial[random];
+        //if (random == 0)
         //{
-        //    case 0:
-        //        brickClone = brickPrefabBlue;            
-        //        break;
-        //    case 1:
-        //        brickClone = brickPrefabRed;
-        //        break;
-        //    case 2:
-        //        brickClone = brickPrefabGreen;
-        //        break;
-        //    case 3:
-        //        brickClone = brickPrefabYellow;
-        //        break;
+        //    listRedBrick.Add(gameObject);
         //}
-        //Instantiate(brickClone, listSpawmBrick[0], Quaternion.identity);
-        poolSpawmBrick.Spawn(listSpawmBrick[0], Quaternion.identity, map1.transform);
-        listSpawmBrick.Remove(listSpawmBrick[0]);
+        //else if (random == 1)
+        //{
+        //    listYellowBrick.Add(gameObject);
+        //}
+        //else if (random == 2)
+        //{
+        //    listGreenBrick.Add(gameObject);
+        //}
+        //else if (random == 3)
+        //{
+        //    listBlueBrick.Add(gameObject);
+        //}
+        listSpawmBrickPosition.Remove(listSpawmBrickPosition[0]);
     }
 
-    public void DrawCircleFloor(Vector3 originalCenter, int radius, int maxOneColor)
-    {
-        //NavMesh.AddNavMeshData()
-        //Vẽ ground
-        GameObject groundClone = Instantiate(groundCubePrefab, originalCenter, Quaternion.identity); ;
-        groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (radius * 2) + 2, groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (radius * 2) + 2);
-        groundClone.transform.position = new Vector3(originalCenter.x, originalCenter.y, originalCenter.z);
+    //public void DrawCircleFloor(Vector3 originalCenter, int radius, int maxOneColor)
+    //{
+    //    //NavMesh.AddNavMeshData()
+    //    //Vẽ ground
+    //    GameObject groundClone = Instantiate(groundCubePrefab, originalCenter, Quaternion.identity); ;
+    //    groundClone.transform.localScale = new Vector3(groundCubePrefab.transform.localScale.x * (radius * 2) + 2, groundCubePrefab.transform.localScale.y, groundCubePrefab.transform.localScale.z * (radius * 2) + 2);
+    //    groundClone.transform.position = new Vector3(originalCenter.x, originalCenter.y, originalCenter.z);
 
-        List<int> numbers = new List<int>();
-        if (numbers != null)
-        {
-            numbers.Clear();
-        }
-        for (int i = 0; i < maxOneColor; i++)
-        {
-            numbers.Add(0);
-            numbers.Add(1);
-            numbers.Add(2);
-            numbers.Add(3);
-        }
-        Suffle(numbers);
-        GameObject brickClone = null;
-        //Tạo brick có màu trong ma trận 2 chiều
-        int index = 0;
-        for (int i = -radius; i <= radius; i++)
-        {
-            for (int j = -radius; j <= radius; j++)
-            {
-                if (i * i + j * j <= radius * radius)
-                {
-                    if (index < numbers.Count)
-                    {
-                        if (numbers[index] == 0)
-                        {
-                            brickClone = brickPrefabBlue;
-                        }
-                        else if (numbers[index] == 1)
-                        {
-                            brickClone = brickPrefabRed;
-                        }
-                        else if (numbers[index] == 2)
-                        {
-                            brickClone = brickPrefabGreen;
-                        }
-                        else if (numbers[index] == 3)
-                        {
-                            brickClone = brickPrefabYellow;
-                        }
-                        Instantiate(brickClone, new Vector3(originalCenter.x + i, originalCenter.y + 0.55f, originalCenter.z + j), Quaternion.identity);
-                        index++;
-                    }
-                }
-            }
-        }
-    }
+    //    List<int> numbers = new List<int>();
+    //    if (numbers != null)
+    //    {
+    //        numbers.Clear();
+    //    }
+    //    for (int i = 0; i < maxOneColor; i++)
+    //    {
+    //        numbers.Add(0);
+    //        numbers.Add(1);
+    //        numbers.Add(2);
+    //        numbers.Add(3);
+    //    }
+    //    Suffle(numbers);
+    //    GameObject brickClone = null;
+    //    //Tạo brick có màu trong ma trận 2 chiều
+    //    int index = 0;
+    //    for (int i = -radius; i <= radius; i++)
+    //    {
+    //        for (int j = -radius; j <= radius; j++)
+    //        {
+    //            if (i * i + j * j <= radius * radius)
+    //            {
+    //                if (index < numbers.Count)
+    //                {
+    //                    if (numbers[index] == 0)
+    //                    {
+    //                        brickClone = brickPrefabBlue;
+    //                    }
+    //                    else if (numbers[index] == 1)
+    //                    {
+    //                        brickClone = brickPrefabRed;
+    //                    }
+    //                    else if (numbers[index] == 2)
+    //                    {
+    //                        brickClone = brickPrefabGreen;
+    //                    }
+    //                    else if (numbers[index] == 3)
+    //                    {
+    //                        brickClone = brickPrefabYellow;
+    //                    }
+    //                    Instantiate(brickClone, new Vector3(originalCenter.x + i, originalCenter.y + 0.55f, originalCenter.z + j), Quaternion.identity);
+    //                    index++;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3722,20 +3722,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCubePrefab: {fileID: 3048606420916119127, guid: 5a560a1ac5bac854a96967b6f2c1c6ad, type: 3}
   groundSquarePrefab: {fileID: 0}
-  brickPrefabGreen: {fileID: 1858638637333668820, guid: 894e48d546553ab48b072a33b51530c4, type: 3}
-  brickPrefabRed: {fileID: 3523174439235608512, guid: 4fa9967506fb96f488ab46dffca6f736, type: 3}
-  brickPrefabBlue: {fileID: 1519675779588831968, guid: 25d78fdf9dcc97240942f2b494ba8f20, type: 3}
-  brickPrefabYellow: {fileID: 5967337660095448629, guid: 99daf3c0c7f917047afbcabdb1038e60, type: 3}
   brickBridgePrefab: {fileID: 3535993825241502555, guid: db9935a5f75e6224e90a3adeb333c173, type: 3}
   playerPrefab: {fileID: 1816646117523639338, guid: 2d437d0a4f3040843bf50945259dbf6a, type: 3}
-  redBotPrefab: {fileID: 8469491901338899099, guid: 4ee7739fab74557408d7ea90695e64da, type: 3}
-  greenBotPrefab: {fileID: 3685098626904391960, guid: 7bf6789ee14955d43af9b21c0c2100b6, type: 3}
-  YellowBotPrefab: {fileID: 2236230587846263074, guid: 6ba1dc62eec88dc4d8b1668a82ac2188, type: 3}
-  prefabBrick: {fileID: 8106242804015183823, guid: 96548b9d49bf09340ac259cea0f46d34, type: 3}
+  botPrefab: {fileID: 3685098626904391960, guid: 7bf6789ee14955d43af9b21c0c2100b6, type: 3}
+  prefabBrick: {fileID: 8106242804015183823, guid: 42ee4f13933ee9542a4c880bff20e4e8, type: 3}
+  brickPrefab: {fileID: 1858638637333668820, guid: 96548b9d49bf09340ac259cea0f46d34, type: 3}
   playerClone: {fileID: 0}
-  botClone: {fileID: 0}
   listPositionBrick: []
-  listSpawmBrick: []
+  listMaterial:
+  - {fileID: 2100000, guid: 831e72a8ddbbca04888b67f338bad05f, type: 2}
+  - {fileID: 2100000, guid: 79e2556cc8996814e8e15e631edd81f7, type: 2}
+  - {fileID: 2100000, guid: 31b888df94c93cf4d9f9e78daf7d9f14, type: 2}
+  - {fileID: 2100000, guid: 5f3d72eb288b8c74ca75ae9beeba002a, type: 2}
+  listRedBrick: []
+  listYellowBrick: []
+  listGreenBrick: []
+  listBlueBrick: []
+  listSpawmBrickPosition: []
   map1: {fileID: 1343068265}
 --- !u!1001 &1609514585
 PrefabInstance:

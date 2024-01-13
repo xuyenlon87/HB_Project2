@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> listBlueBrick;
     public List<Vector3> listSpawmBrickPosition;
     public GameObject map1;
+    public bool wave2 = false;
     private static LevelManager instance;
     private float timer;
     private MiniPool<Brick> poolSpawmBrick;
@@ -76,12 +77,13 @@ public class LevelManager : MonoBehaviour
         var zPos = Random.Range(minZ, maxZ);
         playerClone = Instantiate(playerPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
 
-        GameObject botClone = botPrefab;
-        Renderer color = botClone.GetComponent<Renderer>();
+        GameObject botClone = null;
         for (int i = 0; i < listMaterial.Count - 1; i++)
         {
             xPos = Random.Range(minX, maxX);
             zPos = Random.Range(minZ, maxZ);
+            botClone = Instantiate(botPrefab, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
+            Renderer color = botClone.GetComponent<Renderer>();
             if (i == 0)
             {
                 color.material = listMaterial[0];
@@ -94,7 +96,6 @@ public class LevelManager : MonoBehaviour
             {
                 color.material = listMaterial[2];
             }
-            Instantiate(botClone, new Vector3(xPos + 0.5f, 1.5f, zPos + 0.5f), Quaternion.identity, parent.transform);
         }
     }
     public void DrawmFloor(Vector3 originalBrick, int maxRow, int maxCol, int maxOneColor, Transform parent = null)
@@ -120,14 +121,17 @@ public class LevelManager : MonoBehaviour
         Suffle(numbers);
         //Tạo brick có màu trong ma trận 2 chiều
         int index = 0;
-        GameObject brickClone = brickPrefab;
-        Renderer color = brickClone.GetComponent<Renderer>();
+        GameObject brickClone = null;
         for (int i = 0; i < maxRow; i++)
         {
             for (int j = 0; j < maxCol; j++)
             {
                 if (index < numbers.Count)
                 {
+                    float xPos = originalBrick.x + (i - maxRow / 2) + 0.5f; // Tính toán vị trí theo hàng
+                    float zPos = originalBrick.z + (j - maxCol / 2) + 0.5f; // Tính toán vị trí theo cột
+                    brickClone = Instantiate(brickPrefab, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity, parent.transform);
+                    Renderer color = brickClone.GetComponent<Renderer>();
                     if (numbers[index] == 0)
                     {
                         color.material = listMaterial[0];
@@ -148,9 +152,6 @@ public class LevelManager : MonoBehaviour
                         color.material = listMaterial[3];
                         listBlueBrick.Add(brickClone);
                     }
-                    float xPos = originalBrick.x + (i - maxRow/2 )+0.5f ; // Tính toán vị trí theo hàng
-                    float zPos = originalBrick.z + (j - maxCol/2 )+0.5f ; // Tính toán vị trí theo cột
-                    Instantiate(brickClone, new Vector3(xPos, originalBrick.y + 0.55f, zPos), Quaternion.identity, parent.transform);
                     index++;
                     listPositionBrick.Add(new Vector3(xPos, originalBrick.y + 0.55f, zPos));
                 }

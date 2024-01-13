@@ -8,7 +8,7 @@ public class Brick : MonoBehaviour
     void Start()
     {
         Renderer renderer = GetComponent<Renderer>();
-        int random = Random.Range(0, LevelManager.Instance.listMaterial.Count - 1);
+        int random = Random.Range(0, LevelManager.Instance.listMaterial.Count);
         renderer.material = LevelManager.Instance.listMaterial[random];
         if (random == 0)
         {

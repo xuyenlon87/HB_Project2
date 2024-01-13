@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : IState<Bot>
+public class BuildBridgeState : IState<Bot>
 {
     public void OnEnter(Bot bot)
     {
-        bot.target = GameObject.FindGameObjectWithTag("Player");
+        bot.target = GameObject.FindGameObjectWithTag("Finish");
     }
 
     public void OnExecute(Bot bot)

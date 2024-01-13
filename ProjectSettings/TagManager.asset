@@ -13,6 +13,7 @@ TagManager:
   - BridgeBrick
   - FxTemporaire
   - Brick
+  - Wave2
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Bridge
   - Player
   - Bot
-  - 
+  - Brick
   - 
   - 
   - 

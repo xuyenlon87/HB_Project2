@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Bot : Character
 {
+    public LayerMask brickLayer;
     public NavMeshAgent navMesh;
     public GameObject target;
     private IState<Bot> currentState;
@@ -13,7 +14,7 @@ public class Bot : Character
     {
         ChangeState(new IdleState());
         navMesh = GetComponent<NavMeshAgent>();
-        colorPlayer = new Material(gameObject.GetComponent<Renderer>().material);
+        colorPlayer = GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -22,6 +23,14 @@ public class Bot : Character
         if (currentState != null)
         {
             currentState.OnExecute(this);
+        }
+        if(listBackBrick.Count <= 0)
+        {
+            ChangeState(new FindBrickState());
+        }
+        else if (listBackBrick.Count > 10)
+        {
+            ChangeState(new BuildBridgeState());
         }
     }
     public void ChangeState(IState<Bot> state)

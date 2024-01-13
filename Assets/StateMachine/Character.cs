@@ -40,6 +40,10 @@ public class Character : MonoBehaviour
                 other.GetComponent<Renderer>().material = colorPlayer;
             }
         }
+        if (other.CompareTag("Wave2"))
+        {
+            LevelManager.Instance.wave2 = true;
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -47,13 +51,12 @@ public class Character : MonoBehaviour
         if (collision.gameObject.CompareTag("BridgeBrick"))
         {
             Renderer renderer = collision.collider.GetComponent<Renderer>();
-            if (renderer.material != colorPlayer)
+            if (renderer.material.color != colorPlayer.color)
             {
                 if (listBackBrick.Count > 0)
                 {
                     renderer.material = colorPlayer;
                     collision.gameObject.layer = LayerMask.NameToLayer("Ground");
-                    collision.gameObject.tag = "GroundBrick";
                     var del = listBackBrick.Count - 1;
                     Destroy(listBackBrick[del]);
                     listBackBrick.RemoveAt(del);
@@ -61,6 +64,7 @@ public class Character : MonoBehaviour
                 }
             }
         }
+
         if (collision.gameObject.CompareTag("Finish"))
         {
 

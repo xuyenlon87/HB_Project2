@@ -55,7 +55,7 @@ public class Player : Character
             rb.velocity = Vector3.zero;
             Debug.Log("no hit");
         }
-        if (rb.velocity.magnitude > 0)
+        if (rb.velocity.sqrMagnitude > 0)
         {
             transform.rotation = Quaternion.LookRotation(rb.velocity);
         }

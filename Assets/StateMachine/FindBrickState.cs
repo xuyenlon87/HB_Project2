@@ -26,35 +26,22 @@ public class FindBrickState : IState<Bot>
 
     private void SetNextTarget(Bot bot)
     {
-        Collider[] colliders = Physics.OverlapSphere(bot.transform.position, checkRadius, bot.brickLayer);
+        //Collider[] colliders = Physics.OverlapSphere(bot.transform.position, checkRadius, bot.brickLayer);
         Vector3 nearestBrickPosition = Vector3.zero;
         float minDistance = float.MaxValue;
-        for (int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < LevelManager.Instance.listPositionBrick.Count; i++)
         {
-            // Lấy Renderer từ Collider để truy cập material
-            Renderer brickRenderer = colliders[i].GetComponent<Renderer>();
-            if (brickRenderer != null)
+            if (LevelManager.Instance.listPositionBrick != null && LevelManager.Instance.listPositionBrick.Count > 0)
             {
-                Debug.Log("here");
-                Debug.Log(bot.colorPlayer);
-                Debug.Log(brickRenderer.material);
-                if (brickRenderer.material == bot.colorPlayer)
+                float distanceToBrick = Vector3.Distance(bot.transform.position, LevelManager.Instance.listPositionBrick[i]);
+                minDistance = Mathf.Min(minDistance, distanceToBrick);
+                if (distanceToBrick > minDistance)
                 {
-
-                    float distanceToBrick = Vector3.Distance(bot.transform.position, colliders[i].transform.position);
-                    minDistance = Mathf.Min(minDistance, distanceToBrick);
-                    if (distanceToBrick < minDistance)
-                    {
-                        minDistance = distanceToBrick;
-                        nearestBrickPosition = colliders[i].transform.position;
-                    }
+                    minDistance = distanceToBrick;
+                    nearestBrickPosition = LevelManager.Instance.listPositionBrick[i];
                 }
             }
-            else
-            {
-                Debug.Log("null");
-            }
         }
-
+        bot.navMesh.SetDestination(nearestBrickPosition);
     }
 }
